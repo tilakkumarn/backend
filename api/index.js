@@ -1,15 +1,15 @@
- import express  from "express";
-    import dotenv from "dotenv";
- import mongoose from 'mongoose';
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
 
- const app = express();
- const port = 8800;
- dotenv.config()
+const app = express();
+const port = 8800;
+dotenv.config();
 
 // //this is connecting for mongodb attlas
 // //user name: tilak  password: tilak
@@ -28,14 +28,14 @@ import cookieParser from "cookie-parser";
 
 // this is local mongodb connection
 
-const mongoURI = "mongodb://localhost:27017/booking"
+const mongoURI = "mongodb://localhost:27017/booking";
 // this is local mongodb connection
-const connectToMongo = ()=>{
-    mongoose.connect(mongoURI, ()=>{
-        console.log("connected to local database!");
-    })
-}
-  
+const connectToMongo = () => {
+  mongoose.connect(mongoURI, () => {
+    console.log("connected to local database!");
+  });
+};
+
 //middleware
 app.use(cookieParser());
 app.use(express.json());
@@ -45,45 +45,23 @@ app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 
-   //handling error a middleware
-   app.use((err,req,res,next) => {
-    const errorStatus = err.status || 500;
-    const errorMessage = err.message || "Something went wrong!";
-    return res.status(errorStatus).json({
-      success: false,
-      status: errorStatus,
-      message: errorMessage,
-      stack: err.stack, 
-       });
-   })
+//handling error a middleware    //this is also a middleware
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong!";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
 
-
-app.listen(port, ()=>{
-    // connect();       //web db connection
-    connectToMongo();
-    console.log(`Connected to Backend at port ${port}!`);
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.listen(port, () => {
+  // connect();       //web db connection
+  connectToMongo();
+  console.log(`Connected to Backend at port ${port}!`);
+});
 
 // import express from "express";
 // import mongoose from "mongoose";
