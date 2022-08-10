@@ -6,9 +6,11 @@ import usersRoute from "./routes/users.js";
 import hotelsRoute from "./routes/hotels.js";
 import roomsRoute from "./routes/rooms.js";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 
 const app = express();
 const port = 8800;
+
 dotenv.config();
 
 // //this is connecting for mongodb attlas
@@ -39,6 +41,7 @@ const connectToMongo = () => {
 //middleware
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors())  //succesfull fetching of the data from local server
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", usersRoute);
