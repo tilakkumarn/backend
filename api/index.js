@@ -48,6 +48,7 @@ app.use("/api/users", usersRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 
+
 //handling error a middleware    //this is also a middleware
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
